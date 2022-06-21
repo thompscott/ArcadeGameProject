@@ -1,13 +1,60 @@
 let col = 0; /*values 0-6 for each column*/
-let colcount =[5, 5, 5, 5, 5, 5, 5]; /*tracks number of pieces in each column*/
-colcount[col] = colcount[col] - 1;
-boardstart = [[null, null, null, null, null, null, null],
+const colCount =[5, 5, 5, 5, 5, 5, 5]; /*tracks spaces left in column*/
+
+boardStart = [[null, null, null, null, null, null, null],
               [null, null, null, null, null, null, null],
               [null, null, null, null, null, null, null],
               [null, null, null, null, null, null, null],
               [null, null, null, null, null, null, null],
               [null, null, null, null, null, null, null],]
-              
-function placePiece(col) {
 
+const currBoard = boardStart;
+
+
+const gameState = {
+    board: boardStart,
+    players: ['r', 'y'],
+    colCount: colCount,
+    placePiece: function (col, player) {
+        if (this.colCount[col] < 0) {
+            return "Error: Invalid Move";
+        }
+        if (this.players[player] === 'y') {
+            this.board[this.colCount[col]][col] = 'y';
+        } 
+        else {
+            this.board[this.colCount[col]][col] = 'r';
+        }
+        this.colCount[col] = this.colCount[col] - 1;
+    } 
 }
+
+
+
+/*Testing*/
+/*
+console.log(gameState.board);
+gameState.placePiece(5, 0);
+console.log(gameState.board);
+gameState.placePiece(5, 0);
+console.log(gameState.board);
+gameState.placePiece(5, 0);
+console.log(gameState.board);
+gameState.placePiece(5, 1);
+console.log(gameState.board);
+gameState.placePiece(5, 0);
+console.log(gameState.board);
+gameState.placePiece(5, 0);
+console.log(gameState.board);
+gameState.placePiece(5, 0);
+console.log(gameState.board);
+gameState.placePiece(5, 0);*/
+console.log(gameState.placePiece(5, 0));
+console.log(gameState.placePiece(5, 0));
+console.log(gameState.placePiece(5, 0));
+console.log(gameState.placePiece(5, 0));
+console.log(gameState.placePiece(5, 0));
+console.log(gameState.placePiece(5, 0));
+console.log(gameState.placePiece(5, 0));
+console.log(gameState.placePiece(5, 0));
+console.log(gameState.placePiece(5, 0));
