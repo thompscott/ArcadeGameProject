@@ -33,63 +33,63 @@ const gameState = {
         this.lastPlacedJ = col;
         this.colCount[col] = this.colCount[col] - 1;
     } ,
-    /*Checks For Win Horizontally*/
-    checkWinHorizontal: function (startI, startJ, checkCheat){
-        /*Initialize Starting Check Position*/
-        let checkI = startI;
-        let checkJ = startJ;
-        let check = this.board[checkI][checkJ];
-        if (checkCheat !== "undefined") {
-            check = this.players[this.currPlayer];
+    
+}
+/*Checks For Win Horizontally*/
+function checkWinHorizontal (board, startI, startJ, checkCheat){
+    /*Initialize Starting Check Position*/
+    let checkI = startI;
+    let checkJ = startJ;
+    let check = board[checkI][checkJ];
+    if (checkCheat !== "undefined") {
+        check = gameState.players[gameState.currPlayer];
+    }
+    let checkCount = 0;
+    if (check === 'y') {
+        /*Check Left*/
+        while (check === 'y') {
+            checkCount++;
+            checkJ = checkJ - 1;
+            check = board[checkI][checkJ];
         }
-        let checkCount = 0;
-        if (check === 'y') {
-            /*Check Left*/
-            while (check === 'y') {
-                checkCount++;
-                checkJ = checkJ - 1;
-                check = this.board[checkI][checkJ];
-            }
-            /*Check Right*/
-            checkJ = startJ + 1;
-            check = this.board[checkI][checkJ];
-            while (check === 'y') {
-                checkCount++;
-                checkJ = checkJ + 1;
-                check = this.board[checkI][checkJ]
-            }
-            /*Check checkCount*/
-            if (checkCount >= this.winVal) {
-                return "Win";
-            }
-            return checkCount;
+        /*Check Right*/
+        checkJ = startJ + 1;
+        check = board[checkI][checkJ];
+        while (check === 'y') {
+            checkCount++;
+            checkJ = checkJ + 1;
+            check = board[checkI][checkJ]
         }
-        else if (check === 'r') {
-            /*Check Left*/
-            while (check === 'r') {
-                checkCount++;
-                checkJ = checkJ - 1;
-                check = this.board[checkI][checkJ];
-            }
-            /*Check Right*/
-            checkJ = startJ + 1;
-            check = this.board[checkI][checkJ];
-            while (check === 'r') {
-                checkCount++;
-                checkJ = checkJ + 1;
-                check = this.board[checkI][checkJ]
-            }
-            /*Check checkCount*/
-            if (checkCount >= this.winVal) {
-                return "Win";
-            }
+        /*Check checkCount*/
+        if (checkCount >= gameState.winVal) {
+            return "Win";
         }
-        else {
-            return "Error: Place Empty";
+        return checkCount;
+    }
+    else if (check === 'r') {
+        /*Check Left*/
+        while (check === 'r') {
+            checkCount++;
+            checkJ = checkJ - 1;
+            check = board[checkI][checkJ];
+        }
+        /*Check Right*/
+        checkJ = startJ + 1;
+        check = board[checkI][checkJ];
+        while (check === 'r') {
+            checkCount++;
+            checkJ = checkJ + 1;
+            check = board[checkI][checkJ]
+        }
+        /*Check checkCount*/
+        if (checkCount >= gameState.winVal) {
+            return "Win";
         }
     }
+    else {
+        return "Error: Place Empty";
+    }
 }
-
 
 
 /*Testing*/
@@ -120,4 +120,4 @@ console.log(gameState.placePiece(5, 0));
 console.log(gameState.placePiece(5, 0));
 console.log(gameState.placePiece(5, 0));
 console.log(gameState.placePiece(5, 0));
-console.log(gameState.checkWinHorizontal(gameState.lastPlacedI, gameState.lastPlacedJ, 4));
+console.log(checkWinHorizontal(gameState.board, gameState.lastPlacedI, gameState.lastPlacedJ, 4));
