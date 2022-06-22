@@ -35,13 +35,15 @@ const gameState = {
     } ,
     
 }
+
+
 /*Checks For Win Horizontally*/
 function checkWinHorizontal (board, startI, startJ, checkCheat){
     /*Initialize Starting Check Position*/
     let checkI = startI;
     let checkJ = startJ;
     let check = board[checkI][checkJ];
-    if (checkCheat !== "undefined") {
+    if (checkCheat !== undefined) {
         check = gameState.players[gameState.currPlayer];
     }
     let checkCount = 0;
@@ -70,12 +72,14 @@ function checkWinHorizontal (board, startI, startJ, checkCheat){
         /*Check Left*/
         while (check === 'r') {
             checkCount++;
+            
             checkJ = checkJ - 1;
             check = board[checkI][checkJ];
         }
         /*Check Right*/
         checkJ = startJ + 1;
         check = board[checkI][checkJ];
+        
         while (check === 'r') {
             checkCount++;
             checkJ = checkJ + 1;
@@ -85,6 +89,43 @@ function checkWinHorizontal (board, startI, startJ, checkCheat){
         if (checkCount >= gameState.winVal) {
             return "Win";
         }
+        return checkCount;
+    }
+    else {
+        return "Error: Place Empty";
+    }
+}
+
+function checkWinVertical (board, startI, startJ, checkCheat){
+    /*Initialize Starting Check Position*/
+    let checkI = startI;
+    let checkJ = startJ;
+    let check = board[checkI][checkJ];
+    if (checkCheat !== undefined) {
+        check = gameState.players[gameState.currPlayer];
+    }
+    let checkCount = 0;
+    if (check === 'y') {
+        /*Check Down*/
+        
+        /*Check Up*/
+        
+        /*Check checkCount*/
+        if (checkCount >= gameState.winVal) {
+            return "Win";
+        }
+        return checkCount;
+    }
+    else if (check === 'r') {
+        /*Check Down*/
+        
+        /*Check Up*/
+        
+        /*Check checkCount*/
+        if (checkCount >= gameState.winVal) {
+            return "Win";
+        }
+        return checkCount;
     }
     else {
         return "Error: Place Empty";
@@ -93,6 +134,12 @@ function checkWinHorizontal (board, startI, startJ, checkCheat){
 
 
 /*Testing*/
+boardTest = [['r', null, null, null, null, null, 'r'],
+              [null, null, null, null, null, null, null],
+              ['r', null, null, null, null, null, null],
+              ['r', null, null, null, null, null, null],
+              ['y', null, null, null, null, null, 'r'],
+              ['r', 'y', 'y', 'y', 'y', 'y', null]]
 /*
 console.log(gameState.board);
 gameState.placePiece(5, 0);
@@ -111,6 +158,7 @@ gameState.placePiece(5, 0);
 console.log(gameState.board);
 gameState.placePiece(5, 0);
 */
+/*
 console.log(gameState.placePiece(5, 0));
 console.log(gameState.placePiece(5, 0));
 console.log(gameState.placePiece(5, 0));
@@ -120,4 +168,5 @@ console.log(gameState.placePiece(5, 0));
 console.log(gameState.placePiece(5, 0));
 console.log(gameState.placePiece(5, 0));
 console.log(gameState.placePiece(5, 0));
-console.log(checkWinHorizontal(gameState.board, gameState.lastPlacedI, gameState.lastPlacedJ, 4));
+*/
+console.log(checkWinHorizontal(boardTest, 5, 2, 5));
