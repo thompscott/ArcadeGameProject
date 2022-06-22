@@ -1,29 +1,29 @@
 let col = 0; /*values 0-6 for each column*/
-const colCount =[5, 5, 5, 5, 5, 5, 5]; /*tracks spaces left in column*/
-
+/*Initialize Board*/
 boardStart = [[null, null, null, null, null, null, null],
               [null, null, null, null, null, null, null],
               [null, null, null, null, null, null, null],
               [null, null, null, null, null, null, null],
               [null, null, null, null, null, null, null],
               [null, null, null, null, null, null, null],]
+colCount = [5, 5, 5, 5, 5, 5, 5];/*tracks spaces left in column*/
 
-const currBoard = boardStart;
 
 
 const gameState = {
     board: boardStart,
     players: ['r', 'y'],
-    colCount: colCount,
-    lastPlacedI: 0,
+    colCount: colCount, /*tracks spaces left in column*/
+    lastPlacedI: 0, 
     lastPlacedJ: 0,
-    winVal: 1,
+    winVal: 4,
     currPlayer: 0,
-    placePiece: function (col, player) {
+    /*Places Piece On The Board*/
+    placePiece: function (col) {
         if (this.colCount[col] < 0) {
             return "Error: Invalid Move";
         }
-        if (this.players[player] === 'y') {
+        if (this.players[this.currPlayer] === 'y') {
             this.board[this.colCount[col]][col] = 'y';
         } 
         else {
@@ -33,12 +33,13 @@ const gameState = {
         this.lastPlacedJ = col;
         this.colCount[col] = this.colCount[col] - 1;
     } ,
+    /*Checks For Win Horizontally*/
     checkWinHorizontal: function (startI, startJ, checkCheat){
-        /*Initialize Starting Position*/
+        /*Initialize Starting Check Position*/
         let checkI = startI;
         let checkJ = startJ;
         let check = this.board[checkI][checkJ];
-        if (typeof(checkCheat) !== "undefined") {
+        if (checkCheat !== "undefined") {
             check = this.players[this.currPlayer];
         }
         let checkCount = 0;
@@ -119,4 +120,4 @@ console.log(gameState.placePiece(5, 0));
 console.log(gameState.placePiece(5, 0));
 console.log(gameState.placePiece(5, 0));
 console.log(gameState.placePiece(5, 0));
-console.log(gameState.checkWinHorizontal(gameState.lastPlacedI, gameState.lastPlacedJ));
+console.log(gameState.checkWinHorizontal(gameState.lastPlacedI, gameState.lastPlacedJ, 4));
