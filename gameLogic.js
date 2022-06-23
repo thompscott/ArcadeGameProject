@@ -435,14 +435,62 @@ function checkWinDiagDown (board, startI, startJ, checkCheat){
     }
 }
 
-
+/*Checks For Win In All Directions: Returns "Win" or sum of counts*/
+function checkWin (board, startI, startJ, checkCheat) {
+    let countSum = 0;
+    let horizontal = checkWinHorizontal(board, startI, startJ, checkCheat);
+    console.log(horizontal);
+    if (horizontal === "Win") {
+        return horizontal;
+    }
+    else if(typeof(horizontal) === "number") {
+        countSum = countSum + horizontal;
+    }
+    else {
+        return "Error: Horizontal";
+    }
+    let diagUp = checkWinDiagUp(board, startI, startJ, checkCheat);
+    console.log(diagUp);
+    if (diagUp === "Win") {
+        return diagUp;
+    }
+    else if(typeof(diagUp) === "number") {
+        countSum = countSum + diagUp;
+    }
+    else {
+        return "Error: DiagUp";
+    }
+    let diagDown = checkWinDiagDown(board, startI, startJ, checkCheat);
+    console.log(diagDown);
+    if (diagDown === "Win") {
+        return diagDown;
+    }
+    else if(typeof(diagDown) === "number") {
+        countSum = countSum + diagDown;
+    }
+    else {
+        return "Error: DiagDown";
+    }
+    let vertical = checkWinVertical(board, startI, startJ, checkCheat);
+    console.log(vertical);
+    if (vertical === "Win") {
+        return vertical;
+    }
+    else if(typeof(vertical) === "number"){
+        countSum = countSum + vertical;
+    }
+    else {
+        return "Error: Vertical";
+    }
+    return countSum;
+}
 
 /*Testing*/
 boardTest = [['r', 'y', null, null, null, 'r', null],
-['r', null, 'r', null, 'r', null, null],
-['r', null, null, null, null, null, null],
-['r', null, 'r', null, 'r', null, null],
-[null, 'r', null, null, null, 'r', null],
+['r', null, 'r', 'r', 'r', null, null],
+['r', null, null, 'y', null, null, null],
+['r', null, 'y', 'r', 'y', null, null],
+[null, 'r', null, 'r', null, 'r', null],
 ['y', 'y', null, null, 'y', 'y', 'y']]
 /*
 console.log(gameState.board);
@@ -473,4 +521,4 @@ console.log(gameState.placePiece(5, 0));
 console.log(gameState.placePiece(5, 0));
 console.log(gameState.placePiece(5, 0));
 */
-console.log(checkWinDiagDown(boardTest, 2, 3));
+console.log(checkWin(boardTest, 2, 3));
