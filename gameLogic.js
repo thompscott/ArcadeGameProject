@@ -235,8 +235,8 @@ function checkWinVertical (board, startI, startJ, checkCheat){
 }
 
 
-/*Checks For Win Diagonally: Returns "Win" or number in a row*/
-function checkWinDiagonal (board, startI, startJ, checkCheat){
+/*Checks For Win Diagonally Up: Returns "Win" or number in a row*/
+function checkWinDiagUp (board, startI, startJ, checkCheat){
     /*Initialize Starting Check Position*/
     let checkI = startI;
     let checkJ = startJ;
@@ -253,9 +253,39 @@ function checkWinDiagonal (board, startI, startJ, checkCheat){
     }
     if (check === 'y') {
         /*Check Down, Left*/
-        
-        /*Check Down, Right*/
-        
+        while (check === 'y') {
+            checkCount++;
+            console.log(checkI, checkJ);
+            checkI = checkI + 1;
+            checkJ = checkJ - 1;
+            if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
+                check = board[checkI][checkJ];
+            }
+            else {
+                check = 0;
+            }
+        }
+        /*Check Up, Right*/
+        checkI = startI - 1;
+        checkJ = startJ + 1;
+        if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
+            check = board[checkI][checkJ];
+        }
+        else {
+            check = 0;
+        }
+        while (check === 'y') {
+            checkCount++;
+            console.log(checkI, checkJ);
+            checkI = checkI - 1;
+            checkJ = checkJ + 1;
+            if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
+                check = board[checkI][checkJ];
+            }
+            else {
+                check = 0;
+            }
+        }
         /*Check checkCount*/
         if (checkCount >= gameState.winVal) {
             return "Win";
@@ -263,7 +293,151 @@ function checkWinDiagonal (board, startI, startJ, checkCheat){
         return checkCount;
     }
     else if (check === 'r') {
-       
+        /*Check Down, Left*/
+        while (check === 'r') {
+            checkCount++;
+            console.log(checkI, checkJ);
+            checkI = checkI + 1;
+            checkJ = checkJ - 1;
+            if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
+                check = board[checkI][checkJ];
+            }
+            else {
+                check = 0;
+            }
+        }
+        /*Check Up, Right*/
+        checkI = startI - 1;
+        checkJ = startJ + 1;
+        if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
+            check = board[checkI][checkJ];
+        }
+        else {
+            check = 0;
+        }
+        while (check === 'r') {
+            checkCount++;
+            console.log(checkI, checkJ);
+            checkI = checkI - 1;
+            checkJ = checkJ + 1;
+            if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
+                check = board[checkI][checkJ];
+            }
+            else {
+                check = 0;
+            }
+        }
+        /*Check checkCount*/
+        if (checkCount >= gameState.winVal) {
+            return "Win";
+        }
+        return checkCount;
+    }
+    else if (check === null) {
+        return "Error: Place Empty";
+    }
+    else {
+        return "Error: Out of Bounds";
+    }
+}
+
+/*Checks For Win Diagonally Down: Returns "Win" or number in a row*/
+function checkWinDiagDown (board, startI, startJ, checkCheat){
+    /*Initialize Starting Check Position*/
+    let checkI = startI;
+    let checkJ = startJ;
+    let check = 0;
+    let checkCount = 0;
+    if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
+        check = board[checkI][checkJ];
+    }
+    else {
+        check = 0;
+    }
+    if (checkCheat !== undefined) {
+        check = gameState.players[gameState.currPlayer];
+    }
+    if (check === 'y') {
+        /*Check Down, Right*/
+        while (check === 'y') {
+            checkCount++;
+            console.log(checkI, checkJ);
+            checkI = checkI + 1;
+            checkJ = checkJ + 1;
+            if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
+                check = board[checkI][checkJ];
+            }
+            else {
+                check = 0;
+            }
+        }
+        /*Check Up, Left*/
+        checkI = startI - 1;
+        checkJ = startJ - 1;
+        if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
+            check = board[checkI][checkJ];
+        }
+        else {
+            check = 0;
+        }
+        while (check === 'y') {
+            checkCount++;
+            console.log(checkI, checkJ);
+            checkI = checkI - 1;
+            checkJ = checkJ - 1;
+            if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
+                check = board[checkI][checkJ];
+            }
+            else {
+                check = 0;
+            }
+        }
+        /*Check checkCount*/
+        if (checkCount >= gameState.winVal) {
+            return "Win";
+        }
+        return checkCount;
+    }
+    else if (check === 'r') {
+        /*Check Down, Right*/
+        while (check === 'r') {
+            checkCount++;
+            console.log(checkI, checkJ);
+            checkI = checkI + 1;
+            checkJ = checkJ + 1;
+            if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
+                check = board[checkI][checkJ];
+            }
+            else {
+                check = 0;
+            }
+        }
+        /*Check Up, Left*/
+        checkI = startI - 1;
+        checkJ = startJ - 1;
+        if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
+            check = board[checkI][checkJ];
+        }
+        else {
+            check = 0;
+        }
+        while (check === 'r') {
+            checkCount++;
+            console.log(checkI, checkJ);
+            checkI = checkI - 1;
+            checkJ = checkJ - 1;
+            if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
+                check = board[checkI][checkJ];
+            }
+            else {
+                check = 0;
+            }
+        }
+        /*Check checkCount*/
+        if (checkCount >= gameState.winVal) {
+            return "Win";
+        }
+        return checkCount;
     }
     else if (check === null) {
         return "Error: Place Empty";
@@ -277,11 +451,11 @@ function checkWinDiagonal (board, startI, startJ, checkCheat){
 
 /*REMINDER: Clear console.logs from functions*/
 /*Testing*/
-boardTest = [['r', null, null, null, null, null, null],
+boardTest = [['r', 'y', null, null, null, 'r', null],
+['r', null, 'r', null, 'r', null, null],
 ['r', null, null, null, null, null, null],
-['r', null, null, null, null, null, null],
-['r', null, null, null, null, null, null],
-[null, null, null, null, null, null, null],
+['r', null, 'r', null, 'r', null, null],
+[null, 'r', null, null, null, 'r', null],
 ['y', 'y', null, null, 'y', 'y', 'y']]
 /*
 console.log(gameState.board);
@@ -312,4 +486,4 @@ console.log(gameState.placePiece(5, 0));
 console.log(gameState.placePiece(5, 0));
 console.log(gameState.placePiece(5, 0));
 */
-console.log(checkWinVertical(boardTest, 5, 3));
+console.log(checkWinDiagDown(boardTest, 2, 3));
