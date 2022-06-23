@@ -6,7 +6,7 @@ boardStart = [[null, null, null, null, null, null, null],
               [null, null, null, null, null, null, null],
               [null, null, null, null, null, null, null],
               [null, null, null, null, null, null, null],]
-colCount = [5, 5, 5, 5, 5, 5, 5];/*tracks spaces left in column*/
+let colCount = [5, 5, 5, 5, 5, 5, 5];/*tracks spaces left in column*/
 
 
 
@@ -485,6 +485,17 @@ function checkWin (board, startI, startJ, checkCheat) {
     return countSum;
 }
 
+/*Checks For Draw: Returns "Draw" or "Not Draw"*/
+function checkDraw(colCount) {
+    const columns = [];
+    for (let i = 0; i < colCount.length; i++){
+        if (colCount[i] >= 0) {
+            return "Not Draw";
+        }
+    }
+    return "Draw";
+}
+
 /*Testing*/
 boardTest = [['r', 'y', null, null, null, 'r', null],
 ['r', null, 'r', 'r', 'r', null, null],
@@ -492,6 +503,9 @@ boardTest = [['r', 'y', null, null, null, 'r', null],
 ['r', null, 'y', 'r', 'y', null, null],
 [null, 'r', null, 'r', null, 'r', null],
 ['y', 'y', null, null, 'y', 'y', 'y']]
+
+colCount = [-1, -1, -1, -1, -1, -1, 0];
+console.log(checkDraw(colCount))
 /*
 console.log(gameState.board);
 gameState.placePiece(5, 0);
@@ -521,4 +535,4 @@ console.log(gameState.placePiece(5, 0));
 console.log(gameState.placePiece(5, 0));
 console.log(gameState.placePiece(5, 0));
 */
-console.log(checkWin(boardTest, 2, 3));
+//console.log(checkWin(boardTest, 2, 3));
