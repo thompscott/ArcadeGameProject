@@ -154,7 +154,6 @@ function checkWinVertical (board, startI, startJ, checkCheat){
         /*Check Down*/
         while (check === 'y') {
             checkCount++;
-            console.log(checkI);
             checkI = checkI + 1;
             if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
                 check = board[checkI][checkJ];
@@ -173,7 +172,6 @@ function checkWinVertical (board, startI, startJ, checkCheat){
         }
         while (check === 'y') {
             checkCount++;
-            console.log(checkI);
             checkI = checkI - 1;
             if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
                 check = board[checkI][checkJ];
@@ -192,7 +190,6 @@ function checkWinVertical (board, startI, startJ, checkCheat){
         /*Check Down*/
         while (check === 'r') {
             checkCount++;
-            console.log(checkI);
             checkI = checkI + 1;
             if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
                 check = board[checkI][checkJ];
@@ -211,7 +208,6 @@ function checkWinVertical (board, startI, startJ, checkCheat){
         }
         while (check === 'r') {
             checkCount++;
-            console.log(checkI);
             checkI = checkI - 1;
             if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
                 check = board[checkI][checkJ];
@@ -255,7 +251,6 @@ function checkWinDiagUp (board, startI, startJ, checkCheat){
         /*Check Down, Left*/
         while (check === 'y') {
             checkCount++;
-            console.log(checkI, checkJ);
             checkI = checkI + 1;
             checkJ = checkJ - 1;
             if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
@@ -276,7 +271,6 @@ function checkWinDiagUp (board, startI, startJ, checkCheat){
         }
         while (check === 'y') {
             checkCount++;
-            console.log(checkI, checkJ);
             checkI = checkI - 1;
             checkJ = checkJ + 1;
             if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
@@ -296,7 +290,6 @@ function checkWinDiagUp (board, startI, startJ, checkCheat){
         /*Check Down, Left*/
         while (check === 'r') {
             checkCount++;
-            console.log(checkI, checkJ);
             checkI = checkI + 1;
             checkJ = checkJ - 1;
             if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
@@ -317,7 +310,6 @@ function checkWinDiagUp (board, startI, startJ, checkCheat){
         }
         while (check === 'r') {
             checkCount++;
-            console.log(checkI, checkJ);
             checkI = checkI - 1;
             checkJ = checkJ + 1;
             if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
@@ -361,7 +353,6 @@ function checkWinDiagDown (board, startI, startJ, checkCheat){
         /*Check Down, Right*/
         while (check === 'y') {
             checkCount++;
-            console.log(checkI, checkJ);
             checkI = checkI + 1;
             checkJ = checkJ + 1;
             if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
@@ -382,7 +373,6 @@ function checkWinDiagDown (board, startI, startJ, checkCheat){
         }
         while (check === 'y') {
             checkCount++;
-            console.log(checkI, checkJ);
             checkI = checkI - 1;
             checkJ = checkJ - 1;
             if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
@@ -402,7 +392,6 @@ function checkWinDiagDown (board, startI, startJ, checkCheat){
         /*Check Down, Right*/
         while (check === 'r') {
             checkCount++;
-            console.log(checkI, checkJ);
             checkI = checkI + 1;
             checkJ = checkJ + 1;
             if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
@@ -423,7 +412,6 @@ function checkWinDiagDown (board, startI, startJ, checkCheat){
         }
         while (check === 'r') {
             checkCount++;
-            console.log(checkI, checkJ);
             checkI = checkI - 1;
             checkJ = checkJ - 1;
             if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
@@ -449,7 +437,6 @@ function checkWinDiagDown (board, startI, startJ, checkCheat){
 
 
 
-/*REMINDER: Clear console.logs from functions*/
 /*Testing*/
 boardTest = [['r', 'y', null, null, null, 'r', null],
 ['r', null, 'r', null, 'r', null, null],
