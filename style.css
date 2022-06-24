@@ -3,6 +3,10 @@
     padding: 0;
     box-sizing: border-box;
   }
+  body {
+    display: flex;
+    flex-direction: column;
+  }
  header {
     background-color: dodgerblue;
     display: flex;
@@ -33,4 +37,35 @@
  }
   .button:hover {
     background-color: red;
+  }
+  .players {
+    display: flex;
+  }
+  #player1 {
+    background-color: red;
+    width: 50vw;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+  #player2 {
+    background-color: gold;
+    width: 50vw;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+  }
+  h2 {
+    font-size: 30px;
+  }
+  .player1name {
+    font-size: 20px;
+  }
+  .player2name {
+    font-size: 20px;
   }
