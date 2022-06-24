@@ -44,7 +44,7 @@
   #player1 {
     background-color: red;
     width: 50vw;
-    height: 80px;
+    height: 70px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -53,7 +53,7 @@
   #player2 {
     background-color: gold;
     width: 50vw;
-    height: 80px;
+    height: 70px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -68,4 +68,11 @@
   }
   .player2name {
     font-size: 20px;
+  }
+  .messagebar {
+    background-color: black;
+    height: 45px;
+    color:white;
+    font-size: 30px;
+    text-align: center;
   }
