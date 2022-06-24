@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+ header {
+    background-color: dodgerblue;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    height: 40px;
+
+ }
+ h1 {
+    color: gold;
+ }
+.buttonbox{
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+    
+}
+ .button {
+    border-left: solid white;
+    border-right: solid white;
+    margin-right: 3px;
+    padding-right:3px;
+    padding-left: 3px;
+    background-color: dodgerblue;
+    color: white;
+    font-size: 20px;
+    height: 40px;
+ }
+  .button:hover {
+    background-color: red;
+  }
