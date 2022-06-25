@@ -76,3 +76,23 @@
     font-size: 30px;
     text-align: center;
   }
+
+  /*Board*/
+  .board {
+    background-color: dodgerblue;
+  }
+  
+  td {
+    height: 50px;
+    width: 50px;
+    background-color: red;
+  }
+  th {
+    height: 50px;
+    width: 50px;
+    background-color: white;
+  }
+  colgroup :hover {
+    display: flex;
+    background-color: gold;
+  }
