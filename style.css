@@ -6,6 +6,7 @@
   body {
     display: flex;
     flex-direction: column;
+    background-color: black;
   }
  header {
     background-color: dodgerblue;
@@ -80,19 +81,19 @@
   /*Board*/
   .board {
     background-color: dodgerblue;
-  }
-  
-  td {
-    height: 50px;
-    width: 50px;
-    background-color: red;
-  }
-  th {
-    height: 50px;
-    width: 50px;
-    background-color: white;
-  }
-  colgroup :hover {
     display: flex;
-    background-color: gold;
+    justify-content: space-around;
+
   }
+ td {
+  height: 100px;
+  width: 100px;
+  border-radius: 100%;
+  background-color: red;
+ }
+ table {
+  padding: 10px;
+ }
+ table:hover {
+  background-color: gold;
+ }
