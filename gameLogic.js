@@ -439,7 +439,6 @@ function checkWinDiagDown (board, startI, startJ, checkCheat){
 function checkWin (board, startI, startJ, checkCheat) {
     let countSum = 0;
     let horizontal = checkWinHorizontal(board, startI, startJ, checkCheat);
-    console.log(horizontal);
     if (horizontal === "Win") {
         return horizontal;
     }
@@ -450,7 +449,6 @@ function checkWin (board, startI, startJ, checkCheat) {
         return "Error: Horizontal";
     }
     let diagUp = checkWinDiagUp(board, startI, startJ, checkCheat);
-    console.log(diagUp);
     if (diagUp === "Win") {
         return diagUp;
     }
@@ -461,7 +459,6 @@ function checkWin (board, startI, startJ, checkCheat) {
         return "Error: DiagUp";
     }
     let diagDown = checkWinDiagDown(board, startI, startJ, checkCheat);
-    console.log(diagDown);
     if (diagDown === "Win") {
         return diagDown;
     }
@@ -472,7 +469,6 @@ function checkWin (board, startI, startJ, checkCheat) {
         return "Error: DiagDown";
     }
     let vertical = checkWinVertical(board, startI, startJ, checkCheat);
-    console.log(vertical);
     if (vertical === "Win") {
         return vertical;
     }
@@ -496,7 +492,7 @@ function checkDraw(colCount) {
     return "Draw";
 }
 
-/*Testing*/
+/*Testing
 boardTest = [['r', 'y', null, null, null, 'r', null],
 ['r', null, 'r', 'r', 'r', null, null],
 ['r', null, null, 'y', null, null, null],

@@ -6,7 +6,7 @@
   body {
     display: flex;
     flex-direction: column;
-
+    background-color: black;
   }
  header {
     background-color: dodgerblue;
@@ -83,21 +83,22 @@
     
     display: flex;
     justify-content: space-around;
-
+    background-color: dodgerblue;
   }
  td {
   height: 100px;
   width: 100px;
   border-radius: 100%;
+  background-color: white;
 
  }
  table {
   padding: 10px;
  }
 
- .red {
+ .r {
   background-color: red;
  }
- .yellow {
+ .y {
   background-color: gold;
  }
