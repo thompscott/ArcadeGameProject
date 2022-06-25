@@ -6,7 +6,7 @@
   body {
     display: flex;
     flex-direction: column;
-    background-color: black;
+
   }
  header {
     background-color: dodgerblue;
@@ -80,7 +80,7 @@
 
   /*Board*/
   .board {
-    background-color: dodgerblue;
+    
     display: flex;
     justify-content: space-around;
 
@@ -89,11 +89,15 @@
   height: 100px;
   width: 100px;
   border-radius: 100%;
-  background-color: red;
+
  }
  table {
   padding: 10px;
  }
- table:hover {
+
+ .red {
+  background-color: red;
+ }
+ .yellow {
   background-color: gold;
  }
