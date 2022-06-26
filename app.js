@@ -12,36 +12,6 @@ buttonStart.addEventListener('click', settings)
 
 
 function settings() {
-    letgameState = {
-        boardStart: boardStart,
-        board: boardStart,
-        players: ['r', 'y'],
-        colCountStart: [...colCountStart],
-        colCount: colCountStart, /*tracks spaces left in column*/
-        lastPlacedI: 0, 
-        lastPlacedJ: 0,
-        winVal: winVal,
-        gameOver: false,
-        startPlayer: startPlayer,
-        compPlayer: 1,
-        currPlayer: startPlayer,
-        /*Places Piece On The Board*/
-        placePiece: function (col) {
-            if (this.colCount[col] < 0) {
-                return "Error: Invalid Move";
-            }
-            if (this.players[this.currPlayer] === 'y') {
-                this.board[this.colCount[col]][col] = 'y';
-            } 
-            else {
-                this.board[this.colCount[col]][col] = 'r';
-            }
-            this.lastPlacedI = this.colCount[col];
-            this.lastPlacedJ = col;
-            this.colCount[col] = this.colCount[col] - 1;
-        } 
-        
-    }
     let player1Name = document.getElementById('p1NameInput').value;
     let player2Name = document.getElementById('p2NameInput').value;
     let numOfCol = document.getElementById('column').value;
