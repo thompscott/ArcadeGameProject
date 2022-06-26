@@ -1,30 +1,42 @@
+/*Button Listeners*/
 const button2P = document.getElementById('2pbutton');
-button2P.addEventListener('click', game2P);
+button2P.addEventListener('click', settings2);
 
 const button1P = document.getElementById('1pbutton');
-button1P.addEventListener('click', game2P);
+button1P.addEventListener('click', settings1);
 
 const buttonR = document.getElementById('resetbutton');
 buttonR.addEventListener('click', reset);
 
 const buttonStart = document.getElementById('startbutton');
-buttonStart.addEventListener('click', settings)
+buttonStart.addEventListener('click', game2P)
 
-
-function settings() {
-    let player1Name = document.getElementById('p1NameInput').value;
-    let player2Name = document.getElementById('p2NameInput').value;
-    let numOfCol = document.getElementById('column').value;
-    let numOfRow = document.getElementById('row').value;
-    /*Hide Settings*/
-    const settings = document.getElementById('settings');
-    settings.className = 'hidden';
-    /*Unhide Board*/
-    const board = document.getElementById('board');
-    board.className = '';
-}
 /*Tracks if First Game*/
 let firstGame = true;
+/*Tracks 1 or 2 Player game*/
+let numOfPlayers = 0;
+
+function settings1() {
+    /*Unhide Settings*/
+    const settings = document.getElementById('settings');
+    settings.className = '';
+    /*Set Number of Players*/
+    numOfPlayers = 0;
+    /*Hide Board*/
+    const board = document.getElementById('board');
+    board.className = 'hidden';
+}
+function settings2() {
+    /*Unhide Settings*/
+    const settings = document.getElementById('settings');
+    settings.className = '';
+    /*Set Number of Players*/
+    numOfPlayers = 1;
+    /*Hide Board*/
+    const board = document.getElementById('board');
+    board.className = 'hidden';
+}
+
 
 
 
@@ -33,18 +45,35 @@ let firstGame = true;
 
 /*2 Player Game Start*/
 function game2P() {
-    /*Unhide Settings*/
+    /*Hide Settings*/
     const settings = document.getElementById('settings');
-    settings.className = '';
-
-
+    settings.className = 'hidden';
+    /*Unhide Board*/
+    const board = document.getElementById('board');
+    board.className = '';
+    
     /*Initial Values*/
-    player1Name = "Player 1" + " (Red)";
-    player2Name = "Player 2" + " (Yellow)";
-    const numOfCol = 7;
-    const numOfRow = 6;
+    if (numOfPlayers === 0) {
+        player1Name = document.getElementById('p1NameInput').value + " (Red)";
+        player2Name = "Computer" + " (Yellow)";
+        let compPlayer = 1;
+    }
+    else {
+        player1Name = document.getElementById('p1NameInput').value + " (Red)";
+        player2Name = document.getElementById('p2NameInput').value + " (Yellow)";
+        let compPlayer = 2;
+    }
+    const numOfCol = document.getElementById('column').value;
+    const numOfRow = document.getElementById('row').value;
     const winVal = 4;
-    const startPlayer = 1;
+    const startPlayer = Math.round(Math.random());
+
+    /*Change Player Names*/
+    name1 = document.getElementById('player1name');
+    name1.innerText = player1Name;
+    name2 = document.getElementById('player2name');
+    name2.innerText = player2Name;
+
     /*Initialize Board*/
     let boardStart = createBoard(numOfRow, numOfCol);
     let colCountStart = createColCount(numOfRow, numOfCol);
@@ -63,7 +92,7 @@ function game2P() {
         winVal: winVal,
         gameOver: false,
         startPlayer: startPlayer,
-        compPlayer: 1,
+        compPlayer: compPlayer,
         currPlayer: startPlayer,
         /*Places Piece On The Board*/
         placePiece: function (col) {
@@ -138,11 +167,17 @@ function reset() {
     }
     else {
         /*Resets Board*/
-        gameState.board = gameState.boardStart;
+        viewPiece(1);
+        gameState.board = createBoard(gameState.boardStart.length , gameState.boardStart[0].length);
+        console.log(gameState.board);
         gameState.colCount = [...gameState.colCountStart];
         gameState.currPlayer = gameState.startPlayer;
+        if(gameState.gameOver = true) {
+            gameState.gameOver = false;
+            aILoop();
+        }
         gameState.gameOver = false;
-        viewPiece(1);
+        
         /*Displays Turn Message*/
         const message = document.getElementById('message')
         if(gameState.currPlayer === 0) {
