@@ -10,6 +10,7 @@ buttonR.addEventListener('click', reset);
 const buttonStart = document.getElementById('startbutton');
 buttonStart.addEventListener('click', settings)
 
+
 function settings() {
     let player1Name = document.getElementById('p1NameInput').value;
     let player2Name = document.getElementById('p2NameInput').value;
@@ -89,7 +90,26 @@ function game2P() {
     else {
         message.innerText = player2Name + " Turn";
     }
+    
+    aILoop();
 }
+/*AI Loop*/
+function aILoop () {
+        let max = gameState.colCount.length-1;
+        setInterval(() => {
+            console.log("here");
+            if (gameState.currPlayer === gameState.compPlayer) {
+                col = Math.round(Math.random()* max);
+                console.log(col);
+                move(col);
+            }
+        }, 1000);
+    
+    
+}
+
+
+
 
 /*Resets Current Game*/
 function reset() {
