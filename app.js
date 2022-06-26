@@ -22,15 +22,16 @@ function createBoard(rows, cols) {
     }
     return board;
 }
+/*Initialize colCount*/
+function createColCount(rows, cols) {
+    let colCount = [];
+    for (let i = 0; i < cols; i++) {
+        colCount[i] = rows - 1;
+    }
+    return colCount;
+}
 let boardStart = createBoard(numOfRow, numOfCol);
-/*
-let boardStart = [[null, null, null, null, null, null, null],
-              [null, null, null, null, null, null, null],
-              [null, null, null, null, null, null, null],
-              [null, null, null, null, null, null, null],
-              [null, null, null, null, null, null, null],
-              [null, null, null, null, null, null, null]];*/
-let colCount = [5, 5, 5, 5, 5, 5, 5];/*tracks spaces left in column*/
+let colCount = createColCount(numOfRow, numOfCol);
 
 
 
