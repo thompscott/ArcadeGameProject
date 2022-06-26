@@ -1,17 +1,13 @@
 const button2P = document.getElementById('2pbutton');
-button2P.addEventListener('click', game2);
+button2P.addEventListener('click', game2P);
 
 const button1P = document.getElementById('1pbutton');
-button1P.addEventListener('click', game2);
+button1P.addEventListener('click', game2P);
 
 const buttonR = document.getElementById('resetbutton');
 buttonR.addEventListener('click', reset);
 
 
-
-function clickTest (){
-    console.log("The button has been clicked");
-}
 /*Tracks if First Game*/
 let firstGame = true;
 
@@ -21,7 +17,7 @@ let firstGame = true;
 
 
 /*2 Player Game Start*/
-function game2() {
+function game2P() {
 
 
     /*Initial Values*/
@@ -47,6 +43,7 @@ function game2() {
         lastPlacedI: 0, 
         lastPlacedJ: 0,
         winVal: winVal,
+        gameOver: false,
         startPlayer: startPlayer,
         currPlayer: startPlayer,
         /*Places Piece On The Board*/
@@ -92,6 +89,8 @@ function reset() {
         /*Resets Board*/
         gameState.board = gameState.boardStart;
         gameState.colCount = [...gameState.colCountStart];
+        gameState.currPlayer = gameState.startPlayer;
+        gameState.gameOver = false;
         viewPiece(1);
         /*Displays Turn Message*/
         const message = document.getElementById('message')
@@ -110,46 +109,51 @@ function reset() {
 /*Move Function*/
 function move(col) {
     const message = document.getElementById('message');
-    
-    /*Check If Valid Move*/
-    const moveTest = gameState.placePiece(col);
-    if (moveTest === "Error: Invalid Move") {
-        message.innerText = "Invalid Move";
-        return 0;
-    }
-    /*Check If Win*/
-    const winTest = checkWin(gameState.board, gameState.lastPlacedI, gameState.lastPlacedJ);
-    if (winTest === "Win") {
+    if (gameState.gameOver === false) {
+        /*Check If Valid Move*/
+        const moveTest = gameState.placePiece(col);
+        if (moveTest === "Error: Invalid Move") {
+            message.innerText = "Invalid Move";
+            return 0;
+        }
+        /*Check If Win*/
+        const winTest = checkWin(gameState.board, gameState.lastPlacedI, gameState.lastPlacedJ);
+        if (winTest === "Win") {
+            if(gameState.currPlayer === 0) {
+                message.innerText = "Game Over " + player1Name + " Wins!";
+            }
+            else {
+                message.innerText = "Game Over " + player2Name + " Wins!";
+            }
+            gameState.gameOver = true;
+            viewPiece();
+            return 0;
+        }
+        /*Check If Draw*/
+        const drawTest = checkDraw(gameState.colCount);
+        if (drawTest === "Draw") {
+            if(gameState.currPlayer === 0) {
+                message.innerText = "Game Over " + player1Name + " caused a draw!";
+            }
+            else {
+                message.innerText = "Game Over " + player2Name + " caused a draw";
+            }
+            gameState.gameOver = true;
+            viewPiece();
+            return undefined;
+        }
+        /*Show Piece and Change Player Turn Message*/
         if(gameState.currPlayer === 0) {
-            message.innerText = player1Name + " Wins!";
+            message.innerText = player2Name + " Turn";
         }
         else {
-            message.innerText = player2Name + " Wins!";
-        }
-        viewPiece();
-        return 0;
-    }
-    /*Check If Draw*/
-    const drawTest = checkDraw(gameState.colCount);
-    if (drawTest === "Draw") {
-        if(gameState.currPlayer === 0) {
-            message.innerText = player1Name + " caused a draw!";
-        }
-        else {
-            message.innerText = player2Name + " caused a draw";
+            message.innerText = player1Name + " Turn";
         }
         viewPiece();
         return undefined;
+        
     }
-    /*Show Piece and Change Player Turn Message*/
-    if(gameState.currPlayer === 0) {
-        message.innerText = player2Name + " Turn";
-    }
-    else {
-        message.innerText = player1Name + " Turn";
-    }
-    viewPiece();
-    return undefined;
+    
 }
 
 
