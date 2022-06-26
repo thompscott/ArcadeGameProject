@@ -6,7 +6,7 @@
   body {
     display: flex;
     flex-direction: column;
-    background-color: gold;
+    background-color: dodgerblue;
   }
  header {
     background-color: dodgerblue;
@@ -71,7 +71,7 @@
     font-size: 20px;
   }
   /*Settings*/
-  .settings {
+  #settings {
     display: flex;
     background-color: dodgerblue;
   }

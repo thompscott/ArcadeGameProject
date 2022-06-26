@@ -7,7 +7,18 @@ button1P.addEventListener('click', game2P);
 const buttonR = document.getElementById('resetbutton');
 buttonR.addEventListener('click', reset);
 
+const buttonStart = document.getElementById('startbutton');
+buttonStart.addEventListener('click', settings)
 
+function settings() {
+    let player1Name = document.getElementById('p1NameInput').value;
+    let player2Name = document.getElementById('p2NameInput').value;
+    let numOfCol = document.getElementById('column').value;
+    let numOfRow = document.getElementById('row').value;
+    const settings = document.getElementById('settings');
+    settings.className = 'hidden';
+
+}
 /*Tracks if First Game*/
 let firstGame = true;
 
@@ -45,6 +56,7 @@ function game2P() {
         winVal: winVal,
         gameOver: false,
         startPlayer: startPlayer,
+        compPlayer: 0,
         currPlayer: startPlayer,
         /*Places Piece On The Board*/
         placePiece: function (col) {
@@ -107,9 +119,10 @@ function reset() {
 
 
 /*Move Function*/
-function move(col) {
+function move(col, user) {
     const message = document.getElementById('message');
-    if (gameState.gameOver === false) {
+    /*Check if Player is Allowed to Move*/
+    if (gameState.gameOver === false && (gameState.currPlayer !== gameState.compPlayer || user === undefined)) {
         /*Check If Valid Move*/
         const moveTest = gameState.placePiece(col);
         if (moveTest === "Error: Invalid Move") {
@@ -190,7 +203,7 @@ function createColList(board, firstGame) {
         for (let i = 0; i < board[0].length; i++) {
             let colNum;
             colNum = document.getElementsByTagName('table')[i];
-            colNum.addEventListener('click', ()=>{move(i);});
+            colNum.addEventListener('click', ()=>{move(i, 1);});
         }
         return  false;
     }
