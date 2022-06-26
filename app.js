@@ -7,7 +7,7 @@ const winVal = 4;
 const startPlayer = 1;
 
 
-/*Initialize Board*/
+/*Initialize Board Array*/
 function createBoard(rows, cols) {
     let board = [];
     for (let i = 0; i < rows; i++) {
@@ -22,7 +22,8 @@ function createBoard(rows, cols) {
     }
     return board;
 }
-/*Initialize colCount*/
+
+/*Initialize colCount (tracks spaces left in column)*/
 function createColCount(rows, cols) {
     let colCount = [];
     for (let i = 0; i < cols; i++) {
@@ -30,11 +31,23 @@ function createColCount(rows, cols) {
     }
     return colCount;
 }
+
+/*Initialize Column Event Listeners*/
+function createColList(board) {
+    for (let i = 0; i < board.length; i++) {
+        let colNum = [];
+        colNum[i] = document.getElementsByTagName('table')[i];
+        colNum[i].addEventListener('click', ()=>{move(i);});
+    }
+    
+}
+
+/*Initialize Board*/
 let boardStart = createBoard(numOfRow, numOfCol);
 let colCount = createColCount(numOfRow, numOfCol);
+createColList(boardStart);
 
-
-
+/*Initialize object*/ 
 const gameState = {
     board: boardStart,
     players: ['r', 'y'],
@@ -60,24 +73,6 @@ const gameState = {
     } ,
     
 }
-
-
-/*Initialize Column Event Listeners*/
-function createColList() {
-    for (let i = 0; i < gameState.board[0].length; i++) {
-        let colNum = [];
-        colNum[i] = document.getElementsByTagName('table')[i];
-        colNum[i].addEventListener('click', ()=>{move(i);});
-    }
-    
-}
-/*Iitialize Button Event Listeners*/
-
-createColList();
-
-
-
-
 
 /*Code to access and change individual cells & click
 document.getElementsByTagName('table')[3].getElementsByTagName('td')[1].className = 'red';*/
@@ -116,6 +111,13 @@ function move (col) {
         }
         viewPiece();
         return undefined;
+    }
+    /*Show Piece and Change Player Turn Message*/
+    if(gameState.currPlayer === 0) {
+        message.innerText = player2Name + " Turn";
+    }
+    else {
+        message.innerText = player1Name + " Turn";
     }
     viewPiece();
     return undefined;

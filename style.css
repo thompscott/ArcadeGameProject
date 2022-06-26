@@ -6,7 +6,7 @@
   body {
     display: flex;
     flex-direction: column;
-    background-color: black;
+    background-color: gold;
   }
  header {
     background-color: dodgerblue;
@@ -42,7 +42,7 @@
   .players {
     display: flex;
   }
-  #player1 {
+  .player1 {
     background-color: red;
     width: 50vw;
     height: 70px;
@@ -51,7 +51,7 @@
     justify-content: space-around;
     align-items: center;
   }
-  #player2 {
+  .player2 {
     background-color: gold;
     width: 50vw;
     height: 70px;
@@ -64,12 +64,17 @@
   h2 {
     font-size: 30px;
   }
-  .player1name {
+  #player1name {
     font-size: 20px;
   }
-  .player2name {
+  #player2name {
     font-size: 20px;
   }
+  /*Settings*/
+  .settings {
+    display: flex;
+  }
+  /*Message Bar*/
   .messagebar {
     background-color: black;
     height: 45px;
@@ -104,4 +109,7 @@
  }
  .y {
   background-color: gold;
+ }
+ .hidden {
+  visibility: hidden;
  }

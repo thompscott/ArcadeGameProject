@@ -12,27 +12,34 @@
     <header>
         <h1>Connect Four</h1>
         <div class="buttonbox">
-            <button class="button">New 1-Player Game</button>
-            <button class="button">New 2-Player Game</button>
-            <button class="button">Restart Current Game</button>
+            <button class="button" id="1pbutton">New 1-Player Game</button>
+            <button class="button" id="2pbutton">New 2-Player Game</button>
+            <button class="button" id="resetbutton">Restart Current Game</button>
         </div>
     </header>
     <main>
         <section class="players">
-            <div id="player1">
+            <div class="player1">
                 <h2>Player 1</h2>
-                <p class="player1name">Player1Name</p>
+                <p id="player1name">Player 1 Name</p>
             </div>
-            <div id="player2">
+            <div class="player2">
                 <h2>Player 2</h2>
-                <p class="player2name">Player2Name</p>
+                <p id="player2name">Player 2 Name</p>
+            </div>
+        </section>
+        <section class="settings" id="settings">
+            <div class="player1">
+                <input placeholder="Player 1 Name" type="text">
+                <input type="submit">
+            </div>
+            <div class="player2">
+                <input placeholder="Player 2 Name" type="text">
+                <input type="submit">
             </div>
         </section>
         <section class="messagebar">
-            <p id="message">Message</p>
-        </section>
-        <section class="Setting">
-
+            <p id="message">Select New 1-Player or 2-Player Game</p>
         </section>
         <section class="board">
             <table class="column0">
