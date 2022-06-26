@@ -110,6 +110,9 @@
  .y {
   background-color: gold;
  }
+ .w {
+  background-color: white;
+ }
  .hidden {
   visibility: hidden;
  }

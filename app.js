@@ -1,10 +1,158 @@
-/*Initial Values*/
-const player1Name = "Player 1" + " (Red)";
-const player2Name = "Player 2" + " (Yellow)";
-const numOfCol = 7;
-const numOfRow = 6;
-const winVal = 4;
-const startPlayer = 1;
+const button2P = document.getElementById('2pbutton');
+button2P.addEventListener('click', game2);
+
+const button1P = document.getElementById('1pbutton');
+button1P.addEventListener('click', game2);
+
+const buttonR = document.getElementById('resetbutton');
+buttonR.addEventListener('click', reset);
+
+
+
+function clickTest (){
+    console.log("The button has been clicked");
+}
+/*Tracks if First Game*/
+let firstGame = true;
+
+
+
+
+
+
+/*2 Player Game Start*/
+function game2() {
+
+
+    /*Initial Values*/
+    player1Name = "Player 1" + " (Red)";
+    player2Name = "Player 2" + " (Yellow)";
+    const numOfCol = 7;
+    const numOfRow = 6;
+    const winVal = 4;
+    const startPlayer = 1;
+    /*Initialize Board*/
+    let boardStart = createBoard(numOfRow, numOfCol);
+    let colCountStart = createColCount(numOfRow, numOfCol);
+    
+
+
+    /*Initialize object*/ 
+    gameState = {
+        boardStart: boardStart,
+        board: boardStart,
+        players: ['r', 'y'],
+        colCountStart: [...colCountStart],
+        colCount: colCountStart, /*tracks spaces left in column*/
+        lastPlacedI: 0, 
+        lastPlacedJ: 0,
+        winVal: winVal,
+        startPlayer: startPlayer,
+        currPlayer: startPlayer,
+        /*Places Piece On The Board*/
+        placePiece: function (col) {
+            if (this.colCount[col] < 0) {
+                return "Error: Invalid Move";
+            }
+            if (this.players[this.currPlayer] === 'y') {
+                this.board[this.colCount[col]][col] = 'y';
+            } 
+            else {
+                this.board[this.colCount[col]][col] = 'r';
+            }
+            this.lastPlacedI = this.colCount[col];
+            this.lastPlacedJ = col;
+            this.colCount[col] = this.colCount[col] - 1;
+        } 
+        
+    }
+    /*Creates Event Listeners For Column if First Game*/
+    firstGame = createColList(boardStart, firstGame);
+
+    /*Resets Pieces To White*/
+    viewPiece(1);
+
+    /*Displays Turn Message*/
+    const message = document.getElementById('message')
+    if(gameState.currPlayer === 0) {
+        message.innerText = player1Name + " Turn";
+    }
+    else {
+        message.innerText = player2Name + " Turn";
+    }
+}
+
+/*Resets Current Game*/
+function reset() {
+    if (firstGame === true) {
+        const message = document.getElementById('message')
+        message.innerText = "No Game Started: Select New 1-Player or 2-Player Game"
+    }
+    else {
+        /*Resets Board*/
+        gameState.board = gameState.boardStart;
+        gameState.colCount = [...gameState.colCountStart];
+        viewPiece(1);
+        /*Displays Turn Message*/
+        const message = document.getElementById('message')
+        if(gameState.currPlayer === 0) {
+            message.innerText = player1Name + " Turn";
+        }
+        else {
+            message.innerText = player2Name + " Turn";
+        }
+
+
+    }
+}
+
+
+/*Move Function*/
+function move(col) {
+    const message = document.getElementById('message');
+    
+    /*Check If Valid Move*/
+    const moveTest = gameState.placePiece(col);
+    if (moveTest === "Error: Invalid Move") {
+        message.innerText = "Invalid Move";
+        return 0;
+    }
+    /*Check If Win*/
+    const winTest = checkWin(gameState.board, gameState.lastPlacedI, gameState.lastPlacedJ);
+    if (winTest === "Win") {
+        if(gameState.currPlayer === 0) {
+            message.innerText = player1Name + " Wins!";
+        }
+        else {
+            message.innerText = player2Name + " Wins!";
+        }
+        viewPiece();
+        return 0;
+    }
+    /*Check If Draw*/
+    const drawTest = checkDraw(gameState.colCount);
+    if (drawTest === "Draw") {
+        if(gameState.currPlayer === 0) {
+            message.innerText = player1Name + " caused a draw!";
+        }
+        else {
+            message.innerText = player2Name + " caused a draw";
+        }
+        viewPiece();
+        return undefined;
+    }
+    /*Show Piece and Change Player Turn Message*/
+    if(gameState.currPlayer === 0) {
+        message.innerText = player2Name + " Turn";
+    }
+    else {
+        message.innerText = player1Name + " Turn";
+    }
+    viewPiece();
+    return undefined;
+}
+
+
 
 
 /*Initialize Board Array*/
@@ -33,106 +181,37 @@ function createColCount(rows, cols) {
 }
 
 /*Initialize Column Event Listeners*/
-function createColList(board) {
-    for (let i = 0; i < board.length; i++) {
-        let colNum = [];
-        colNum[i] = document.getElementsByTagName('table')[i];
-        colNum[i].addEventListener('click', ()=>{move(i);});
+function createColList(board, firstGame) {
+    if (firstGame === true) {
+        for (let i = 0; i < board[0].length; i++) {
+            let colNum;
+            colNum = document.getElementsByTagName('table')[i];
+            colNum.addEventListener('click', ()=>{move(i);});
+        }
+        return  false;
     }
-    
+    return false;
 }
 
-/*Initialize Board*/
-let boardStart = createBoard(numOfRow, numOfCol);
-let colCount = createColCount(numOfRow, numOfCol);
-createColList(boardStart);
-
-/*Initialize object*/ 
-const gameState = {
-    board: boardStart,
-    players: ['r', 'y'],
-    colCount: colCount, /*tracks spaces left in column*/
-    lastPlacedI: 0, 
-    lastPlacedJ: 0,
-    winVal: 4,
-    currPlayer: startPlayer,
-    /*Places Piece On The Board*/
-    placePiece: function (col) {
-        if (this.colCount[col] < 0) {
-            return "Error: Invalid Move";
-        }
-        if (this.players[this.currPlayer] === 'y') {
-            this.board[this.colCount[col]][col] = 'y';
-        } 
-        else {
-            this.board[this.colCount[col]][col] = 'r';
-        }
-        this.lastPlacedI = this.colCount[col];
-        this.lastPlacedJ = col;
-        this.colCount[col] = this.colCount[col] - 1;
-    } ,
-    
-}
-
-/*Code to access and change individual cells & click
-document.getElementsByTagName('table')[3].getElementsByTagName('td')[1].className = 'red';*/
 
 
-/*Move Function*/
-function move (col) {
-    message = document.getElementById('message');
-    
-    /*Check If Valid Move*/
-    const moveTest = gameState.placePiece(col);
-    if (moveTest === "Error: Invalid Move") {
-        message.innerText = "Invalid Move";
-        return undefined;
-    }
-    /*Check If Win*/
-    const winTest = checkWin(gameState.board, gameState.lastPlacedI, gameState.lastPlacedJ);
-    if (winTest === "Win") {
-        if(gameState.currPlayer === 0) {
-            message.innerText = player1Name + " Wins!";
-        }
-        else {
-            message.innerText = player2Name + " Wins!";
-        }
-        viewPiece();
-        return undefined;
-    }
-    /*Check If Draw*/
-    const drawTest = checkDraw(gameState.colCount);
-    if (drawTest === "Draw") {
-        if(gameState.currPlayer === 0) {
-            message.innerText = player1Name + " caused a draw!";
-        }
-        else {
-            message.innerText = player2Name + " caused a draw";
-        }
-        viewPiece();
-        return undefined;
-    }
-    /*Show Piece and Change Player Turn Message*/
-    if(gameState.currPlayer === 0) {
-        message.innerText = player2Name + " Turn";
-    }
-    else {
-        message.innerText = player1Name + " Turn";
-    }
-    viewPiece();
-    return undefined;
-}
+
 
 
 /*Allows The Piece To Be Visible The Players*/
 function viewPiece(reset) {
     let playNum = gameState.currPlayer
     let spot = document.getElementsByTagName('table')[gameState.lastPlacedJ].getElementsByTagName('td')[gameState.lastPlacedI];
-    if (reset) {
-        spot.className = '';
-        gameState.currPlayer = startPlayer;
+    if (reset !== undefined) {
+        for(let i = 0; i < gameState.board.length ; i++) {
+            for(let j = 0; j < gameState.board[0].length ; j++) {
+                spot = document.getElementsByTagName('table')[j].getElementsByTagName('td')[i];
+                spot.className = 'w';
+            }
+        }
+        gameState.currPlayer = gameState.startPlayer;
     }
-    if (playNum === 1) {
+    else if (playNum === 1) {
         spot.className = gameState.players[playNum];
         gameState.currPlayer = 0;
     }
@@ -148,7 +227,7 @@ function viewPiece(reset) {
 
 
 /*Checks For Win Horizontally: Returns "Win" or number in a row*/
-function checkWinHorizontal (board, startI, startJ, checkCheat){
+function checkWinHorizontal(board, startI, startJ, checkCheat) {
     /*Initialize Starting Check Position*/
     let checkI = startI;
     let checkJ = startJ;
@@ -245,7 +324,7 @@ function checkWinHorizontal (board, startI, startJ, checkCheat){
 }
 
 /*Checks For Win Vertically: Returns "Win" or number in a row*/
-function checkWinVertical (board, startI, startJ, checkCheat){
+function checkWinVertical(board, startI, startJ, checkCheat) {
     /*Initialize Starting Check Position*/
     let checkI = startI;
     let checkJ = startJ;
@@ -342,7 +421,7 @@ function checkWinVertical (board, startI, startJ, checkCheat){
 
 
 /*Checks For Win Diagonally Up: Returns "Win" or number in a row*/
-function checkWinDiagUp (board, startI, startJ, checkCheat){
+function checkWinDiagUp(board, startI, startJ, checkCheat) {
     /*Initialize Starting Check Position*/
     let checkI = startI;
     let checkJ = startJ;
@@ -444,7 +523,7 @@ function checkWinDiagUp (board, startI, startJ, checkCheat){
 }
 
 /*Checks For Win Diagonally Down: Returns "Win" or number in a row*/
-function checkWinDiagDown (board, startI, startJ, checkCheat){
+function checkWinDiagDown(board, startI, startJ, checkCheat) {
     /*Initialize Starting Check Position*/
     let checkI = startI;
     let checkJ = startJ;
@@ -546,7 +625,7 @@ function checkWinDiagDown (board, startI, startJ, checkCheat){
 }
 
 /*Checks For Win In All Directions: Returns "Win" or sum of counts*/
-function checkWin (board, startI, startJ, checkCheat) {
+function checkWin(board, startI, startJ, checkCheat) {
     let countSum = 0;
     let horizontal = checkWinHorizontal(board, startI, startJ, checkCheat);
     if (horizontal === "Win") {
