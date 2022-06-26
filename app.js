@@ -1,6 +1,15 @@
+/*Initial Values*/
+const player1Name = "Player 1" + " (Red)";
+const player2Name = "Player 2" + " (Yellow)";
+const numOfCol = 7;
+const numofRow = 6;
+const winVal = 4;
+const startPlayer = 1;
 
-let col = 0; /*values 0-6 for each column*/
+
 /*Initialize Board*/
+
+
 boardStart = [[null, null, null, null, null, null, null],
               [null, null, null, null, null, null, null],
               [null, null, null, null, null, null, null],
@@ -18,7 +27,7 @@ const gameState = {
     lastPlacedI: 0, 
     lastPlacedJ: 0,
     winVal: 4,
-    currPlayer: 1,
+    currPlayer: startPlayer,
     /*Places Piece On The Board*/
     placePiece: function (col) {
         if (this.colCount[col] < 0) {
@@ -38,8 +47,18 @@ const gameState = {
 }
 
 
+/*Initialize Column Event Listeners*/
+function createColList() {
+    for (let i = 0; i < gameState.board[0].length; i++) {
+        let colNum = [];
+        colNum[i] = document.getElementsByTagName('table')[i];
+        colNum[i].addEventListener('click', ()=>{move(i);});
+    }
+    
+}
+/*Iitialize Button Event Listeners*/
 
-
+createColList();
 
 
 
@@ -47,22 +66,55 @@ const gameState = {
 
 /*Code to access and change individual cells & click
 document.getElementsByTagName('table')[3].getElementsByTagName('td')[1].className = 'red';*/
-const col0 = document.getElementsByTagName('table')[0];
-col0.addEventListener('click', help);
 
-function clickFunc(){
-    console.log("There has been a dclick");
-}
-function help () {
-    move(0);
-}
+
 /*Move Function*/
 function move (col) {
-    gameState.placePiece(col);
-    checkWin(gameState.board, gameState.lastPlacedI, gameState.lastPlacedJ);
-    checkDraw(gameState.colCount);
+    message = document.getElementById('message');
+    
+    /*Check If Valid Move*/
+    const moveTest = gameState.placePiece(col);
+    if (moveTest === "Error: Invalid Move") {
+        message.innerText = "Invalid Move";
+        return undefined;
+    }
+    /*Check If Win*/
+    const winTest = checkWin(gameState.board, gameState.lastPlacedI, gameState.lastPlacedJ);
+    if (winTest === "Win") {
+        if(gameState.currPlayer === 0) {
+            message.innerText = player1Name + " Wins!";
+        }
+        else {
+            message.innerText = player2Name + " Wins!";
+        }
+        viewPiece();
+        return undefined;
+    }
+    /*Check If Draw*/
+    const drawTest = checkDraw(gameState.colCount);
+    if (drawTest === "Draw") {
+        if(gameState.currPlayer === 0) {
+            message.innerText = player1Name + " caused a draw!";
+        }
+        else {
+            message.innerText = player2Name + " caused a draw";
+        }
+        viewPiece();
+        return undefined;
+    }
+    viewPiece();
+    return undefined;
+}
+
+
+/*Allows The Piece To Be Visible The Players*/
+function viewPiece(reset) {
     let playNum = gameState.currPlayer
     let spot = document.getElementsByTagName('table')[gameState.lastPlacedJ].getElementsByTagName('td')[gameState.lastPlacedI];
+    if (reset) {
+        spot.className = '';
+        gameState.currPlayer = startPlayer;
+    }
     if (playNum === 1) {
         spot.className = gameState.players[playNum];
         gameState.currPlayer = 0;
@@ -71,7 +123,7 @@ function move (col) {
         spot.className = gameState.players[playNum];
         gameState.currPlayer = 1;   
     }
-    return "Done";
+    return undefined;
 }
 
 

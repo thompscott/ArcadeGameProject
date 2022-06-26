@@ -96,6 +96,9 @@
   padding: 10px;
  }
 
+ table:hover {
+  background-color: black;
+ }
  .r {
   background-color: red;
  }
