@@ -12,13 +12,46 @@ buttonStart.addEventListener('click', settings)
 
 
 function settings() {
+    letgameState = {
+        boardStart: boardStart,
+        board: boardStart,
+        players: ['r', 'y'],
+        colCountStart: [...colCountStart],
+        colCount: colCountStart, /*tracks spaces left in column*/
+        lastPlacedI: 0, 
+        lastPlacedJ: 0,
+        winVal: winVal,
+        gameOver: false,
+        startPlayer: startPlayer,
+        compPlayer: 1,
+        currPlayer: startPlayer,
+        /*Places Piece On The Board*/
+        placePiece: function (col) {
+            if (this.colCount[col] < 0) {
+                return "Error: Invalid Move";
+            }
+            if (this.players[this.currPlayer] === 'y') {
+                this.board[this.colCount[col]][col] = 'y';
+            } 
+            else {
+                this.board[this.colCount[col]][col] = 'r';
+            }
+            this.lastPlacedI = this.colCount[col];
+            this.lastPlacedJ = col;
+            this.colCount[col] = this.colCount[col] - 1;
+        } 
+        
+    }
     let player1Name = document.getElementById('p1NameInput').value;
     let player2Name = document.getElementById('p2NameInput').value;
     let numOfCol = document.getElementById('column').value;
     let numOfRow = document.getElementById('row').value;
+    /*Hide Settings*/
     const settings = document.getElementById('settings');
     settings.className = 'hidden';
-
+    /*Unhide Board*/
+    const board = document.getElementById('board');
+    board.className = '';
 }
 /*Tracks if First Game*/
 let firstGame = true;
@@ -30,6 +63,9 @@ let firstGame = true;
 
 /*2 Player Game Start*/
 function game2P() {
+    /*Unhide Settings*/
+    const settings = document.getElementById('settings');
+    settings.className = '';
 
 
     /*Initial Values*/
@@ -57,7 +93,7 @@ function game2P() {
         winVal: winVal,
         gameOver: false,
         startPlayer: startPlayer,
-        compPlayer: 0,
+        compPlayer: 1,
         currPlayer: startPlayer,
         /*Places Piece On The Board*/
         placePiece: function (col) {
@@ -90,22 +126,35 @@ function game2P() {
     else {
         message.innerText = player2Name + " Turn";
     }
+    /*Starts AI Loop For Single Player*/
+    if (gameState.compPlayer === 0 || gameState.compPlayer === 1) {
+        aILoop();
+    }
     
-    aILoop();
 }
 /*AI Loop*/
 function aILoop () {
-        let max = gameState.colCount.length-1;
-        setInterval(() => {
+        
+        id = setInterval(() => {
             console.log("here");
             if (gameState.currPlayer === gameState.compPlayer) {
-                col = Math.round(Math.random()* max);
-                console.log(col);
+                let col = aIColSelect();
                 move(col);
             }
+            /*Terminates Loop at Game Over*/
+            if (gameState.gameOver === true){
+                clearInterval(id);
+            };
         }, 1000);
     
     
+}
+
+/*AI Logic Returns Col Number*/
+function aIColSelect () {
+    let max = gameState.colCount.length-1;
+    col = Math.round(Math.random()* max);
+    return col;
 }
 
 
