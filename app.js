@@ -2,20 +2,34 @@
 const player1Name = "Player 1" + " (Red)";
 const player2Name = "Player 2" + " (Yellow)";
 const numOfCol = 7;
-const numofRow = 6;
+const numOfRow = 6;
 const winVal = 4;
 const startPlayer = 1;
 
 
 /*Initialize Board*/
-
-
-boardStart = [[null, null, null, null, null, null, null],
+function createBoard(rows, cols) {
+    let board = [];
+    for (let i = 0; i < rows; i++) {
+        board[i] = [];
+    }
+    for (let i = 0; i < rows; i++) {
+        board[i] = [];
+        for (let j = 0; j < cols; j++) {
+            board [i] [j] = null;
+            
+        }
+    }
+    return board;
+}
+let boardStart = createBoard(numOfRow, numOfCol);
+/*
+let boardStart = [[null, null, null, null, null, null, null],
               [null, null, null, null, null, null, null],
               [null, null, null, null, null, null, null],
               [null, null, null, null, null, null, null],
               [null, null, null, null, null, null, null],
-              [null, null, null, null, null, null, null],]
+              [null, null, null, null, null, null, null]];*/
 let colCount = [5, 5, 5, 5, 5, 5, 5];/*tracks spaces left in column*/
 
 

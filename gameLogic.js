@@ -60,6 +60,7 @@ function checkWinHorizontal (board, startI, startJ, checkCheat){
             checkJ = checkJ - 1;
             if ((checkI >= 0 && checkI < board.length) || (checkJ >= 0 && checkJ < board.length[0])) {
                 check = board[checkI][checkJ];
+                console.log(check);
             }
             else {
                 check = 0;
@@ -491,8 +492,25 @@ function checkDraw(colCount) {
     }
     return "Draw";
 }
-
-/*Testing
+function createBoard(rows, cols) {
+    let board = [];
+    let row = [];
+    for (let i = 0; i < rows; i++) {
+        board[i] = [];
+    }
+    for (let i = 0; i < rows; i++) {
+        board[i] = [];
+        for (let j = 0; j < cols; j++) {
+            board [i] [j] = null;
+            
+        }
+    }
+    return board;
+}
+boardStart = createBoard(6, 7);
+console.log(boardStart);
+console.log("Welcome to Programiz!");
+/*Testing*/
 boardTest = [['r', 'y', null, null, null, 'r', null],
 ['r', null, 'r', 'r', 'r', null, null],
 ['r', null, null, 'y', null, null, null],
@@ -531,4 +549,6 @@ console.log(gameState.placePiece(5, 0));
 console.log(gameState.placePiece(5, 0));
 console.log(gameState.placePiece(5, 0));
 */
-//console.log(checkWin(boardTest, 2, 3));
+boardStart[3][2] = 'y';
+console.log(boardStart);
+console.log(checkWinHorizontal(boardStart, 2, 3));
