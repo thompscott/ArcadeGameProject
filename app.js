@@ -120,10 +120,10 @@ function move(col) {
         const winTest = checkWin(gameState.board, gameState.lastPlacedI, gameState.lastPlacedJ);
         if (winTest === "Win") {
             if(gameState.currPlayer === 0) {
-                message.innerText = "Game Over " + player1Name + " Wins!";
+                message.innerText = "Game Over: " + player1Name + " Wins!";
             }
             else {
-                message.innerText = "Game Over " + player2Name + " Wins!";
+                message.innerText = "Game Over: " + player2Name + " Wins!";
             }
             gameState.gameOver = true;
             viewPiece();
@@ -133,10 +133,10 @@ function move(col) {
         const drawTest = checkDraw(gameState.colCount);
         if (drawTest === "Draw") {
             if(gameState.currPlayer === 0) {
-                message.innerText = "Game Over " + player1Name + " caused a draw!";
+                message.innerText = "Game Over: " + player1Name + " caused a draw!";
             }
             else {
-                message.innerText = "Game Over " + player2Name + " caused a draw";
+                message.innerText = "Game Over: " + player2Name + " caused a draw";
             }
             gameState.gameOver = true;
             viewPiece();

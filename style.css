@@ -73,6 +73,23 @@
   /*Settings*/
   .settings {
     display: flex;
+    background-color: dodgerblue;
+  }
+  .setbox{
+    width: 50vw;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .start {
+    width: 50vw;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
   }
   /*Message Bar*/
   .messagebar {
