@@ -9,13 +9,15 @@ const buttonR = document.getElementById('resetbutton');
 buttonR.addEventListener('click', reset);
 
 const buttonStart = document.getElementById('startbutton');
-buttonStart.addEventListener('click', game2P)
+buttonStart.addEventListener('click', game)
 
 /*Tracks if First Game*/
 let firstGame = true;
 /*Tracks 1 or 2 Player game*/
 let numOfPlayers = 0;
 
+
+/*Allows User to Input Settings at Beginning of Game*/
 function settings1() {
     /*Unhide Settings*/
     const settings = document.getElementById('settings');
@@ -39,12 +41,8 @@ function settings2() {
 
 
 
-
-
-
-
-/*2 Player Game Start*/
-function game2P() {
+/*Main Game Loop*/
+function game() {
     /*Hide Settings*/
     const settings = document.getElementById('settings');
     settings.className = 'hidden';
@@ -53,19 +51,22 @@ function game2P() {
     board.className = '';
     
     /*Initial Values*/
+    let compPlayer = 0;
     if (numOfPlayers === 0) {
         player1Name = document.getElementById('p1NameInput').value + " (Red)";
         player2Name = "Computer" + " (Yellow)";
-        let compPlayer = 1;
+        compPlayer = 1;
     }
     else {
         player1Name = document.getElementById('p1NameInput').value + " (Red)";
         player2Name = document.getElementById('p2NameInput').value + " (Yellow)";
-        let compPlayer = 2;
+        compPlayer = 2;
     }
     const numOfCol = document.getElementById('column').value;
     const numOfRow = document.getElementById('row').value;
     const winVal = 4;
+
+    /*Randomize Start Players*/
     const startPlayer = Math.round(Math.random());
 
     /*Change Player Names*/
@@ -125,38 +126,85 @@ function game2P() {
     else {
         message.innerText = player2Name + " Turn";
     }
+
     /*Starts AI Loop For Single Player*/
     if (gameState.compPlayer === 0 || gameState.compPlayer === 1) {
         aILoop();
     }
     
 }
-/*AI Loop*/
-function aILoop () {
-        
-        id = setInterval(() => {
-            console.log("here");
-            if (gameState.currPlayer === gameState.compPlayer) {
-                let col = aIColSelect();
-                move(col);
+
+
+/*Supplemental Functions*/
+
+/*Initialization Functions*/
+
+
+/*Initialize Board Array*/
+function createBoard(rows, cols) {
+    let board = [];
+    for (let i = 0; i < rows; i++) {
+        board[i] = [];
+    }
+    for (let i = 0; i < rows; i++) {
+        board[i] = [];
+        for (let j = 0; j < cols; j++) {
+            board [i] [j] = null;
+            
+        }
+    }
+    return board;
+}
+
+/*Initialize colCount (tracks spaces left in column)*/
+function createColCount(rows, cols) {
+    let colCount = [];
+    for (let i = 0; i < cols; i++) {
+        colCount[i] = rows - 1;
+    }
+    return colCount;
+}
+
+/*Initialize Column Event Listeners*/
+function createColList(board, firstGame) {
+    if (firstGame === true) {
+        for (let i = 0; i < board[0].length; i++) {
+            let colNum;
+            colNum = document.getElementsByTagName('table')[i];
+            colNum.addEventListener('click', ()=>{move(i, 1);});
+        }
+        return  false;
+    }
+    return false;
+}
+
+
+/*Board Functions*/
+
+
+/*Allows The Piece To Be Visible The Players*/
+function viewPiece(reset) {
+    let playNum = gameState.currPlayer
+    let spot = document.getElementsByTagName('table')[gameState.lastPlacedJ].getElementsByTagName('td')[gameState.lastPlacedI];
+    if (reset !== undefined) {
+        for(let i = 0; i < gameState.board.length ; i++) {
+            for(let j = 0; j < gameState.board[0].length ; j++) {
+                spot = document.getElementsByTagName('table')[j].getElementsByTagName('td')[i];
+                spot.className = 'w';
             }
-            /*Terminates Loop at Game Over*/
-            if (gameState.gameOver === true){
-                clearInterval(id);
-            };
-        }, 1000);
-    
-    
+        }
+        gameState.currPlayer = gameState.startPlayer;
+    }
+    else if (playNum === 1) {
+        spot.className = gameState.players[playNum];
+        gameState.currPlayer = 0;
+    }
+    else {
+        spot.className = gameState.players[playNum];
+        gameState.currPlayer = 1;   
+    }
+    return undefined;
 }
-
-/*AI Logic Returns Col Number*/
-function aIColSelect () {
-    let max = gameState.colCount.length-1;
-    col = Math.round(Math.random()* max);
-    return col;
-}
-
-
 
 
 /*Resets Current Game*/
@@ -169,10 +217,9 @@ function reset() {
         /*Resets Board*/
         viewPiece(1);
         gameState.board = createBoard(gameState.boardStart.length , gameState.boardStart[0].length);
-        console.log(gameState.board);
         gameState.colCount = [...gameState.colCountStart];
         gameState.currPlayer = gameState.startPlayer;
-        if(gameState.gameOver = true) {
+        if(gameState.gameOver = true && gameState.compPlayer === 1) {
             gameState.gameOver = false;
             aILoop();
         }
@@ -192,7 +239,7 @@ function reset() {
 }
 
 
-/*Move Function*/
+/*Move Function Moves and Checks Play for Win Or Draw*/
 function move(col, user) {
     const message = document.getElementById('message');
     /*Check if Player is Allowed to Move*/
@@ -244,73 +291,28 @@ function move(col, user) {
 }
 
 
-
-
-/*Initialize Board Array*/
-function createBoard(rows, cols) {
-    let board = [];
-    for (let i = 0; i < rows; i++) {
-        board[i] = [];
-    }
-    for (let i = 0; i < rows; i++) {
-        board[i] = [];
-        for (let j = 0; j < cols; j++) {
-            board [i] [j] = null;
-            
-        }
-    }
-    return board;
-}
-
-/*Initialize colCount (tracks spaces left in column)*/
-function createColCount(rows, cols) {
-    let colCount = [];
-    for (let i = 0; i < cols; i++) {
-        colCount[i] = rows - 1;
-    }
-    return colCount;
-}
-
-/*Initialize Column Event Listeners*/
-function createColList(board, firstGame) {
-    if (firstGame === true) {
-        for (let i = 0; i < board[0].length; i++) {
-            let colNum;
-            colNum = document.getElementsByTagName('table')[i];
-            colNum.addEventListener('click', ()=>{move(i, 1);});
-        }
-        return  false;
-    }
-    return false;
-}
-
-
-
-
-
-
-/*Allows The Piece To Be Visible The Players*/
-function viewPiece(reset) {
-    let playNum = gameState.currPlayer
-    let spot = document.getElementsByTagName('table')[gameState.lastPlacedJ].getElementsByTagName('td')[gameState.lastPlacedI];
-    if (reset !== undefined) {
-        for(let i = 0; i < gameState.board.length ; i++) {
-            for(let j = 0; j < gameState.board[0].length ; j++) {
-                spot = document.getElementsByTagName('table')[j].getElementsByTagName('td')[i];
-                spot.className = 'w';
+/*AI Loop*/
+function aILoop () {
+        
+        id = setInterval(() => {
+            if (gameState.currPlayer === gameState.compPlayer) {
+                let col = aIColSelect();
+                move(col);
             }
-        }
-        gameState.currPlayer = gameState.startPlayer;
-    }
-    else if (playNum === 1) {
-        spot.className = gameState.players[playNum];
-        gameState.currPlayer = 0;
-    }
-    else {
-        spot.className = gameState.players[playNum];
-        gameState.currPlayer = 1;   
-    }
-    return undefined;
+            /*Terminates Loop at Game Over*/
+            if (gameState.gameOver === true){
+                clearInterval(id);
+            };
+        }, 1000);
+    
+    
+}
+
+/*AI Logic Returns Col Number*/
+function aIColSelect () {
+    let max = gameState.colCount.length-1;
+    col = Math.round(Math.random()* max);
+    return col;
 }
 
 
