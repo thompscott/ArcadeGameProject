@@ -22,6 +22,9 @@ function settings1() {
     /*Unhide Settings*/
     const settings = document.getElementById('settings');
     settings.className = '';
+    /*Display Message*/
+    const message = document.getElementById('message')
+        message.innerText = "1 Player Game"
     /*Set Number of Players*/
     numOfPlayers = 0;
     /*Hide Board*/
@@ -32,6 +35,9 @@ function settings2() {
     /*Unhide Settings*/
     const settings = document.getElementById('settings');
     settings.className = '';
+    /*Display Message*/
+    const message = document.getElementById('message')
+        message.innerText = "2 Player Game"
     /*Set Number of Players*/
     numOfPlayers = 1;
     /*Hide Board*/
@@ -291,36 +297,11 @@ function move(col, user) {
 }
 
 
-/*AI Loop*/
-function aILoop () {
-        
-        id = setInterval(() => {
-            if (gameState.currPlayer === gameState.compPlayer) {
-                let col = aIColSelect();
-                move(col);
-            }
-            /*Terminates Loop at Game Over*/
-            if (gameState.gameOver === true){
-                clearInterval(id);
-            };
-        }, 1000);
-    
-    
-}
-
-/*AI Logic Returns Col Number*/
-function aIColSelect () {
-    let max = gameState.colCount.length-1;
-    col = Math.round(Math.random()* max);
-    return col;
-}
-
-
 /*gameLogicCode*/
 
 
 /*Checks For Win Horizontally: Returns "Win" or number in a row*/
-function checkWinHorizontal(board, startI, startJ, checkCheat) {
+function checkWinHorizontal(board, startI, startJ, checkCheat, player) {
     /*Initialize Starting Check Position*/
     let checkI = startI;
     let checkJ = startJ;
@@ -333,7 +314,7 @@ function checkWinHorizontal(board, startI, startJ, checkCheat) {
         check = 0;
     }
     if (checkCheat !== undefined) {
-        check = gameState.players[gameState.currPlayer];
+        check = gameState.players[checkCheat];
     }
     if (check === 'y') {
         /*Check Left*/
@@ -430,7 +411,7 @@ function checkWinVertical(board, startI, startJ, checkCheat) {
         check = 0;
     }
     if (checkCheat !== undefined) {
-        check = gameState.players[gameState.currPlayer];
+        check = gameState.players[checkCheat];
     }
     if (check === 'y') {
         /*Check Down*/
@@ -527,7 +508,7 @@ function checkWinDiagUp(board, startI, startJ, checkCheat) {
         check = 0;
     }
     if (checkCheat !== undefined) {
-        check = gameState.players[gameState.currPlayer];
+        check = gameState.players[checkCheat];
     }
     if (check === 'y') {
         /*Check Down, Left*/
@@ -629,7 +610,7 @@ function checkWinDiagDown(board, startI, startJ, checkCheat) {
         check = 0;
     }
     if (checkCheat !== undefined) {
-        check = gameState.players[gameState.currPlayer];
+        check = gameState.players[checkCheat];
     }
     if (check === 'y') {
         /*Check Down, Right*/
@@ -772,4 +753,74 @@ function checkDraw(colCount) {
         }
     }
     return "Draw";
+}
+
+
+/*AI Logic Code*/
+
+
+/*AI Loop*/
+function aILoop () {
+        
+    id = setInterval(() => {
+        if (gameState.currPlayer === gameState.compPlayer) {
+            let col = aIColSelect(gameState.board, gameState.colCount);
+            move(col);
+        }
+        /*Terminates Loop at Game Over*/
+        if (gameState.gameOver === true){
+            clearInterval(id);
+        };
+    }, 2000);
+
+
+}
+
+/*AI Logic Returns Col Number*/
+function aIColSelect (board, colCount) {
+    /*Determine if Win is Possible*/
+    for (let i = 0; i < board[0].length; i++) {
+        if (colCount[i] >= 0) {
+            const winTest = checkWin(gameState.board, colCount[i], i, 1);
+            if (winTest === "Win") {
+                
+                return i;
+            }
+        }
+    
+    }
+
+    /*Determine if Opponent Win is Possible*/
+    for (let i = 0; i < board[0].length; i++) {
+        if (colCount[i] >= 0) {
+            const winTest = checkWin(gameState.board, colCount[i], i, 0);
+            if (winTest === "Win") {
+                
+                return i;
+            }
+        }
+    
+    }
+
+     /*Determine Best Move Based on the Sum of The Counts in All Directions*/
+     /*Replace With Code Below For Easier Computer Opponent*/
+     /*col = Math.round(Math.random() */
+     let bestCol = [];
+     for (let i = 0; i < board[0].length; i++) {
+        
+        if (colCount[i] >= 0) {
+            const winTest = checkWin(gameState.board, colCount[i], i, 1);
+            bestCol[i] = winTest;
+        }
+    
+    }
+    biggest = Math.max(...bestCol);
+    col = bestCol.indexOf(biggest);
+    
+    return col;
+
+    /*Easy Mode Code*/
+    /*col = Math.round(Math.random() * gameState.board[0].length - 1);
+    return col;*/
+    
 }
